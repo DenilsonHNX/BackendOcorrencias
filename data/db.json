@@ -1,0 +1,115 @@
+{
+  "users": [
+    {
+      "id": "ec90d73f-7da8-4001-ad46-2a019c65fa2d",
+      "nome": "Admin Geral",
+      "email": "denilson@gmail.com",
+      "passwordHash": "$2a$10$XxW1SdIdzzsOeriRs/C5AOKTYzusdYrrESm5BGTEkNtMCBmc.SN1m",
+      "role": "user",
+      "estado": "ativo",
+      "infracoes": 0,
+      "criadoEm": "2026-06-14T19:08:38.604Z"
+    },
+    {
+      "id": "4e53561c-8464-4a3d-ab55-9c3097a68506",
+      "nome": "Teste",
+      "email": "teste@gmail.com",
+      "passwordHash": "$2a$10$eZjrF0sNqtFSBkcnxq1BsuW4Td3ABj1MepJ.XgqyPyBE.2s3Crd4K",
+      "role": "user",
+      "estado": "ativo",
+      "infracoes": 0,
+      "criadoEm": "2026-06-14T20:04:07.315Z"
+    }
+  ],
+  "videos": [
+    {
+      "id": "c2b7d86a-9652-48db-80ff-5a9ae46044cb",
+      "titulo": "Acidente na via principal",
+      "descricao": "Acidente na via principal do dia 12",
+      "categoriaId": "762110d8-5683-472e-8443-abaf6d1523f2",
+      "localizacao": null,
+      "ficheiro": "uploads\\videos\\19d959a3-44a3-448a-a16e-a08d2a11443b_compressed.mp4",
+      "hlsPath": null,
+      "tamanhoOriginal": 633992,
+      "tamanhoComprimido": 27802,
+      "taxaCompressao": "95.6%",
+      "duracao": 5,
+      "autorId": "ec90d73f-7da8-4001-ad46-2a019c65fa2d",
+      "estado": "ativo",
+      "views": 0,
+      "criadoEm": "2026-06-14T19:30:36.671Z"
+    }
+  ],
+  "likes": [
+    {
+      "id": "ae9e1f33-7ae2-45e7-89d4-834df77384c5",
+      "videoId": "c2b7d86a-9652-48db-80ff-5a9ae46044cb",
+      "userId": "4e53561c-8464-4a3d-ab55-9c3097a68506",
+      "criadoEm": "2026-06-14T20:05:10.744Z"
+    }
+  ],
+  "comentarios": [
+    {
+      "id": "eb8cb8fc-6d5e-4c47-97e3-f93e901dccc4",
+      "videoId": "c2b7d86a-9652-48db-80ff-5a9ae46044cb",
+      "userId": "4e53561c-8464-4a3d-ab55-9c3097a68506",
+      "texto": "Ooooooo",
+      "estado": "ativo",
+      "criadoEm": "2026-06-14T20:05:23.385Z"
+    }
+  ],
+  "denuncias": [],
+  "categorias": [
+    {
+      "id": "762110d8-5683-472e-8443-abaf6d1523f2",
+      "nome": "Trânsito",
+      "icone": "🚗"
+    },
+    {
+      "id": "7e877fad-f1c4-4e27-9a6b-2db9fdd0102c",
+      "nome": "Acidentes",
+      "icone": "🚨"
+    },
+    {
+      "id": "90f08ba9-56ed-4608-a6c7-824b5e35f881",
+      "nome": "Obras Públicas",
+      "icone": "🚧"
+    },
+    {
+      "id": "57c62a94-52b9-4698-8b72-37eaa3a5766d",
+      "nome": "Segurança",
+      "icone": "🔒"
+    },
+    {
+      "id": "3aadd475-66dd-4f0f-bd83-9d25219fce83",
+      "nome": "Saúde",
+      "icone": "🏥"
+    },
+    {
+      "id": "59ca0726-f006-40dc-ab25-b5f854ed709b",
+      "nome": "Eventos",
+      "icone": "📢"
+    },
+    {
+      "id": "84eca27d-3c24-40ba-8a11-706172d48bbc",
+      "nome": "Emergências",
+      "icone": "🆘"
+    },
+    {
+      "id": "e55db4a1-47af-462c-afa9-95273cffda54",
+      "nome": "Inundações",
+      "icone": "🌊"
+    },
+    {
+      "id": "1959e285-52de-4620-83d7-9a2d4a586409",
+      "nome": "Incêndios",
+      "icone": "🔥"
+    },
+    {
+      "id": "974da6ed-edc4-47aa-8749-3a4dd2523e75",
+      "nome": "Outros",
+      "icone": "📌"
+    }
+  ],
+  "auditoria": []
+}
