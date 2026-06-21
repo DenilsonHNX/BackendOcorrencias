@@ -1,90 +1,136 @@
-# 📹 Plataforma de Ocorrências em Vídeo — Backend
+# OcorrênciasApp — Servidor (Backend)
 
-**Grupo 10 | Projecto Final Multimédia 2026**
-
-Backend RESTful com Node.js + Express. Suporta upload de vídeos, compressão automática com FFmpeg, streaming HLS e progressivo, sistema de denúncias e painel de administração completo.
+API RESTful em Node.js com streaming de vídeo, compressão H.264 via FFmpeg e segurança mTLS.
 
 ---
 
-## 📦 Instalação
+## Requisitos
+
+- [Node.js](https://nodejs.org/) 18.x ou superior
+- [FFmpeg](https://ffmpeg.org/) instalado e disponível no PATH
+
+Verificar instalações:
+```bash
+node --version
+ffmpeg -version
+```
+
+---
+
+## Instalação
 
 ```bash
+git clone https://github.com/DenilsonHNX/BackendOcorrencias.git
+cd BackendOcorrencias
 npm install
-
-# Instalar FFmpeg (obrigatório)
-sudo apt install ffmpeg      # Linux
-brew install ffmpeg          # macOS
-
-cp .env.example .env
 ```
 
-## ▶️ Executar
+---
+
+## Configuração
+
+### Endereço IP
+
+Editar `src/server.js` e substituir o IP pelo IP da máquina na rede local. A app Flutter usa este IP para as ligações.
+
+### Certificados mTLS
+
+Os certificados estão em `certs/`. Para regenerar:
 
 ```bash
-npm run dev    # desenvolvimento
-npm start      # produção
+# CA privada
+openssl genrsa -out certs/ca.key 2048
+openssl req -new -x509 -days 3650 -key certs/ca.key -out certs/ca.crt -subj "/CN=OcorrenciasCA"
+
+# Certificado do servidor
+openssl genrsa -out certs/servidor.key 2048
+openssl req -new -key certs/servidor.key -out certs/servidor.csr -subj "/CN=servidor.ocorrencias"
+openssl x509 -req -days 3650 -in certs/servidor.csr -CA certs/ca.crt -CAkey certs/ca.key -CAcreateserial -out certs/servidor.crt
+
+# Certificado do cliente (app mobile)
+openssl genrsa -out certs/app.key 2048
+openssl req -new -key certs/app.key -out certs/app.csr -subj "/CN=app.ocorrencias"
+openssl x509 -req -days 3650 -in certs/app.csr -CA certs/ca.crt -CAkey certs/ca.key -CAcreateserial -out certs/app.crt
 ```
 
 ---
 
-## 🛣️ Endpoints
+## Executar
 
-### Público
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| POST | `/api/auth/registar` | Criar conta |
-| POST | `/api/auth/login` | Login → retorna JWT |
-| GET  | `/api/videos` | Feed (paginado, filtrável) |
-| GET  | `/api/videos/:id` | Detalhe do vídeo |
-| GET  | `/api/stream/:id` | Streaming progressivo |
-| GET  | `/api/categorias` | Listar categorias |
+```bash
+npm start
+```
 
-### Utilizador autenticado (🔒 JWT)
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| POST | `/api/videos/upload` | Publicar vídeo |
-| POST | `/api/videos/:id/like` | Like/Unlike |
-| GET  | `/api/videos/:id/comentarios` | Ver comentários |
-| POST | `/api/videos/:id/comentarios` | Comentar |
-| POST | `/api/videos/:id/denunciar` | Denunciar vídeo |
-
-### Admin (🔒 JWT + role admin)
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| GET   | `/api/admin/dashboard` | Estatísticas gerais |
-| GET   | `/api/admin/utilizadores` | Listar utilizadores |
-| PATCH | `/api/admin/utilizadores/:id/estado` | Suspender/Bloquear |
-| GET   | `/api/admin/videos` | Todos os vídeos |
-| PATCH | `/api/admin/videos/:id/estado` | Ocultar/Remover |
-| GET   | `/api/admin/denuncias` | Denúncias pendentes |
-| PATCH | `/api/admin/denuncias/:id` | Resolver denúncia |
-| GET   | `/api/admin/auditoria` | Log de acções |
+Dois serviços arrancam:
+- **API REST (mTLS)** — `https://0.0.0.0:3000`
+- **Streaming VOD (HTTP)** — `http://0.0.0.0:3001`
 
 ---
 
-## 🗂️ Estrutura
+## Estrutura
 
 ```
-ocorrencias-backend/
+Backend/
+├── certs/           # Certificados PKI (CA, servidor, cliente)
+├── data/
+│   └── db.json      # Base de dados (persistência JSON)
 ├── src/
-│   ├── server.js
-│   ├── database.js
-│   ├── middleware/
-│   │   ├── auth.js       ← JWT + verificação de conta
-│   │   └── upload.js     ← Multer (só vídeos)
+│   ├── routes/      # auth, videos, admin, categorias, stream
+│   ├── middleware/  # JWT, mTLS, roles
 │   ├── services/
-│   │   └── ffmpeg.js     ← Compressão + HLS + Thumbnail
-│   └── routes/
-│       ├── auth.js
-│       ├── videos.js     ← Feed, upload, like, comentário, denúncia
-│       ├── stream.js     ← Range requests
-│       ├── admin.js      ← Dashboard, moderação, auditoria
-│       └── categorias.js
+│   │   └── ffmpeg.js   # Compressão H.264 + thumbnail
+│   ├── database.js
+│   └── server.js
 ├── uploads/
-│   ├── videos/
-│   └── thumbnails/
-├── hls/
-├── .env.example
-└── package.json
+│   ├── videos/      # Originais + *_compressed.mp4
+│   └── thumbnails/  # Gerados automaticamente
+└── hls/             # Segmentos HLS (gerados automaticamente)
 ```
-"# BackendOcorrencias" 
+
+---
+
+## Endpoints Principais
+
+| Método | Endpoint | Auth | Descrição |
+|---|---|---|---|
+| POST | `/api/auth/register` | — | Registo |
+| POST | `/api/auth/login` | — | Login → JWT |
+| GET | `/api/videos` | opcional | Feed de vídeos |
+| POST | `/api/videos` | JWT | Upload de vídeo |
+| GET | `/api/stream/:id` | mTLS | Streaming do vídeo |
+| GET | `/api/admin/dashboard` | JWT+admin | Estatísticas |
+| GET | `/api/admin/utilizadores` | JWT+admin | Listar utilizadores |
+| POST | `/api/admin/utilizadores` | JWT+admin | Criar utilizador |
+| PATCH | `/api/admin/utilizadores/:id/estado` | JWT+admin | Suspender/Bloquear |
+| GET | `/api/admin/videos` | JWT+admin | Listar vídeos |
+| PATCH | `/api/admin/videos/:id/estado` | JWT+admin | Ocultar/Remover |
+| GET | `/api/admin/denuncias` | JWT+admin | Listar denúncias |
+| PATCH | `/api/admin/denuncias/:id` | JWT+admin | Resolver denúncia |
+| GET | `/api/admin/auditoria` | JWT+admin | Logs de auditoria |
+
+---
+
+## Conta de Administrador Padrão
+
+- **Email:** `admin@ocorrencias.ao`
+- **Password:** `Admin@2026`
+
+---
+
+## Compressão de Vídeo
+
+FFmpeg é invocado automaticamente após cada upload:
+
+```
+Codec:    libx264 (H.264)   CRF: 28   Preset: medium
+Escala:   máximo 720p       Áudio: AAC 128 kbps
+```
+
+Resultados medidos com vídeos reais:
+
+| Vídeo | Original | Comprimido | Redução |
+|---|---|---|---|
+| 6s | 6.62 MB | 683 KB | 89,9% |
+| 3s | 3.38 MB | 596 KB | 82,8% |
+| 12s | 12.87 MB | 2.53 MB | 80,4% |
+| **Média** | — | — | **84,4%** |
