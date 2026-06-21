@@ -38,6 +38,7 @@ router.get('/', (req, res) => {
       views: v.views,
       likes: db.contarLikes(v.id),
       likedPorMim: userId ? db.utilizadorDeuLike(v.id, userId) : false,
+      guardadoPorMim: userId ? db.estaGuardado(v.id, userId) : false,
       denuncias: db.contarDenunciasVideo(v.id),
       autor: autor ? { id: autor.id, nome: autor.nome } : null,
       criadoEm: v.criadoEm
@@ -45,6 +46,44 @@ router.get('/', (req, res) => {
   });
 
   res.json({ videos: resultado, total, pagina: parseInt(pagina), totalPaginas: Math.ceil(total / limite) });
+});
+
+// GET /api/videos/meus — Vídeos do utilizador autenticado
+router.get('/meus', verificarToken, (req, res) => {
+  const videos = db.listarVideosPorAutor(req.user.id);
+  const resultado = videos.map(v => {
+    const autor = db.buscarUtilizadorPorId(v.autorId);
+    return {
+      id: v.id, titulo: v.titulo, descricao: v.descricao,
+      thumbnail: v.thumbnail, duracao: v.duracao,
+      views: v.views, likes: db.contarLikes(v.id),
+      likedPorMim: db.utilizadorDeuLike(v.id, req.user.id),
+      guardadoPorMim: db.estaGuardado(v.id, req.user.id),
+      categoriaId: v.categoriaId, localizacao: v.localizacao,
+      autor: autor ? { id: autor.id, nome: autor.nome } : null,
+      criadoEm: v.criadoEm
+    };
+  });
+  res.json(resultado);
+});
+
+// GET /api/videos/guardados — Vídeos guardados pelo utilizador
+router.get('/guardados', verificarToken, (req, res) => {
+  const videos = db.listarGuardados(req.user.id);
+  const resultado = videos.map(v => {
+    const autor = db.buscarUtilizadorPorId(v.autorId);
+    return {
+      id: v.id, titulo: v.titulo, descricao: v.descricao,
+      thumbnail: v.thumbnail, duracao: v.duracao,
+      views: v.views, likes: db.contarLikes(v.id),
+      likedPorMim: db.utilizadorDeuLike(v.id, req.user.id),
+      guardadoPorMim: true,
+      categoriaId: v.categoriaId, localizacao: v.localizacao,
+      autor: autor ? { id: autor.id, nome: autor.nome } : null,
+      criadoEm: v.criadoEm
+    };
+  });
+  res.json(resultado);
 });
 
 // GET /api/videos/:id — Detalhe de um vídeo
@@ -157,6 +196,16 @@ router.post('/:id/comentarios', verificarToken, contaActiva, (req, res) => {
   const comentario = db.criarComentario({ videoId: video.id, userId: req.user.id, texto: texto.trim() });
   const autor = db.buscarUtilizadorPorId(req.user.id);
   res.status(201).json({ ...comentario, autorNome: autor?.nome });
+});
+
+// POST /api/videos/:id/guardar — Guardar/remover dos guardados
+router.post('/:id/guardar', verificarToken, contaActiva, (req, res) => {
+  const video = db.buscarVideoPorId(req.params.id);
+  if (!video || video.estado !== 'ativo')
+    return res.status(404).json({ error: 'Vídeo não encontrado.' });
+
+  const resultado = db.toggleGuardado(video.id, req.user.id);
+  res.json(resultado);
 });
 
 // POST /api/videos/:id/denunciar — Denunciar vídeo

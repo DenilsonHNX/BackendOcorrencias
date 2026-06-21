@@ -26,6 +26,27 @@ router.get('/utilizadores', (req, res) => {
   res.json(users);
 });
 
+// POST /api/admin/utilizadores — Criar utilizador manualmente
+router.post('/utilizadores', async (req, res) => {
+  const bcrypt = require('bcryptjs');
+  const { nome, email, password, role = 'user' } = req.body;
+  if (!nome || !email || !password)
+    return res.status(400).json({ error: 'Nome, email e password são obrigatórios.' });
+  if (!['user', 'admin'].includes(role))
+    return res.status(400).json({ error: 'Role inválido.' });
+  if (db.buscarUtilizadorPorEmail(email))
+    return res.status(409).json({ error: 'Já existe um utilizador com este email.' });
+
+  const passwordHash = await bcrypt.hash(password, 10);
+  const user = db.criarUtilizador({ nome, email, passwordHash, role });
+  db.registarAuditoria({
+    adminId: req.user.id, acao: 'UTILIZADOR_CRIADO',
+    entidade: 'utilizador', entidadeId: user.id,
+    detalhe: `Conta criada pelo admin: ${email} (${role})`
+  });
+  res.status(201).json({ message: 'Utilizador criado com sucesso.', user: { id: user.id, nome: user.nome, email: user.email, role: user.role } });
+});
+
 // PATCH /api/admin/utilizadores/:id/estado — Suspender / Bloquear / Reativar
 router.patch('/utilizadores/:id/estado', (req, res) => {
   const { estado } = req.body;

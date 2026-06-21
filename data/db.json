@@ -5,7 +5,7 @@
       "nome": "Admin Geral",
       "email": "denilson@gmail.com",
       "passwordHash": "$2a$10$XxW1SdIdzzsOeriRs/C5AOKTYzusdYrrESm5BGTEkNtMCBmc.SN1m",
-      "role": "user",
+      "role": "admin",
       "estado": "ativo",
       "infracoes": 0,
       "criadoEm": "2026-06-14T19:08:38.604Z"
@@ -19,25 +19,82 @@
       "estado": "ativo",
       "infracoes": 0,
       "criadoEm": "2026-06-14T20:04:07.315Z"
+    },
+    {
+      "id": "96825eea-dc50-4893-997f-dc2edc975036",
+      "nome": "Administrador",
+      "email": "admin@ocorrencias.ao",
+      "passwordHash": "$2a$10$LWyt7kHlmCwZ6UmDwlxzHe0awgVmQu64YIx0sFhiDPPU4cSiwI23m",
+      "role": "admin",
+      "estado": "ativo",
+      "infracoes": 0,
+      "criadoEm": "2026-06-20T22:13:47.590Z"
+    },
+    {
+      "id": "6eb34530-5529-475a-89d9-d2e7fd54984e",
+      "nome": "teste tt",
+      "email": "teste@email.com",
+      "passwordHash": "$2a$10$50r6xYA8IJx/Jq2kh9J8N.tClAyf7GHA.Rv2xM9pbtLMw66oNKP2W",
+      "role": "user",
+      "estado": "ativo",
+      "infracoes": 0,
+      "criadoEm": "2026-06-20T23:06:00.252Z"
     }
   ],
   "videos": [
     {
-      "id": "c2b7d86a-9652-48db-80ff-5a9ae46044cb",
-      "titulo": "Acidente na via principal",
-      "descricao": "Acidente na via principal do dia 12",
-      "categoriaId": "762110d8-5683-472e-8443-abaf6d1523f2",
+      "id": "d67676d8-c7e8-4c9f-a1e2-887326de0b87",
+      "titulo": "teste",
+      "descricao": "😬😬😬🫪",
+      "categoriaId": "59ca0726-f006-40dc-ab25-b5f854ed709b",
       "localizacao": null,
-      "ficheiro": "uploads\\videos\\19d959a3-44a3-448a-a16e-a08d2a11443b_compressed.mp4",
-      "hlsPath": null,
-      "tamanhoOriginal": 633992,
-      "tamanhoComprimido": 27802,
-      "taxaCompressao": "95.6%",
-      "duracao": 5,
+      "ficheiro": "uploads\\videos\\52c97579-389f-4574-b629-ff55be9fc6b1_compressed.mp4",
+      "hlsPath": "hls/d67676d8-c7e8-4c9f-a1e2-887326de0b87/index.m3u8",
+      "tamanhoOriginal": 6941784,
+      "tamanhoComprimido": 699624,
+      "taxaCompressao": "89.9%",
+      "duracao": 6,
       "autorId": "ec90d73f-7da8-4001-ad46-2a019c65fa2d",
       "estado": "ativo",
-      "views": 0,
-      "criadoEm": "2026-06-14T19:30:36.671Z"
+      "views": 7,
+      "criadoEm": "2026-06-20T22:28:49.366Z",
+      "thumbnail": "uploads/thumbnails/d67676d8-c7e8-4c9f-a1e2-887326de0b87.jpg"
+    },
+    {
+      "id": "bb548084-83c1-415f-b103-fc1e4aeecfab",
+      "titulo": "gravando text",
+      "descricao": "teste",
+      "categoriaId": "974da6ed-edc4-47aa-8749-3a4dd2523e75",
+      "localizacao": null,
+      "ficheiro": "uploads\\videos\\09d85971-3697-4828-8e74-4bc958595c7a_compressed.mp4",
+      "hlsPath": "hls/bb548084-83c1-415f-b103-fc1e4aeecfab/index.m3u8",
+      "tamanhoOriginal": 3540582,
+      "tamanhoComprimido": 609864,
+      "taxaCompressao": "82.8%",
+      "duracao": 3,
+      "autorId": "ec90d73f-7da8-4001-ad46-2a019c65fa2d",
+      "estado": "ativo",
+      "views": 5,
+      "criadoEm": "2026-06-20T22:44:42.480Z",
+      "thumbnail": "uploads/thumbnails/bb548084-83c1-415f-b103-fc1e4aeecfab.jpg"
+    },
+    {
+      "id": "c5f70326-b0b4-451b-9788-8b88cf67e330",
+      "titulo": "PC avaria",
+      "descricao": "PC louco",
+      "categoriaId": "59ca0726-f006-40dc-ab25-b5f854ed709b",
+      "localizacao": null,
+      "ficheiro": "uploads\\videos\\72b837e8-f93e-44d2-8fad-8c5f5f4beba0_compressed.mp4",
+      "hlsPath": "hls/c5f70326-b0b4-451b-9788-8b88cf67e330/index.m3u8",
+      "tamanhoOriginal": 13500007,
+      "tamanhoComprimido": 2650844,
+      "taxaCompressao": "80.4%",
+      "duracao": 12,
+      "autorId": "6eb34530-5529-475a-89d9-d2e7fd54984e",
+      "estado": "ativo",
+      "views": 3,
+      "criadoEm": "2026-06-20T23:07:21.330Z",
+      "thumbnail": "uploads/thumbnails/c5f70326-b0b4-451b-9788-8b88cf67e330.jpg"
     }
   ],
   "likes": [
@@ -46,6 +103,12 @@
       "videoId": "c2b7d86a-9652-48db-80ff-5a9ae46044cb",
       "userId": "4e53561c-8464-4a3d-ab55-9c3097a68506",
       "criadoEm": "2026-06-14T20:05:10.744Z"
+    },
+    {
+      "id": "9cc267d8-c9b3-474b-a759-22da20085125",
+      "videoId": "c2b7d86a-9652-48db-80ff-5a9ae46044cb",
+      "userId": "ec90d73f-7da8-4001-ad46-2a019c65fa2d",
+      "criadoEm": "2026-06-20T20:54:10.070Z"
     }
   ],
   "comentarios": [
@@ -56,9 +119,26 @@
       "texto": "Ooooooo",
       "estado": "ativo",
       "criadoEm": "2026-06-14T20:05:23.385Z"
+    },
+    {
+      "id": "cbe15a9a-3f2d-4f54-9604-d607a9ed7434",
+      "videoId": "c2b7d86a-9652-48db-80ff-5a9ae46044cb",
+      "userId": "ec90d73f-7da8-4001-ad46-2a019c65fa2d",
+      "texto": "Opaaa",
+      "estado": "ativo",
+      "criadoEm": "2026-06-20T20:54:00.124Z"
     }
   ],
-  "denuncias": [],
+  "denuncias": [
+    {
+      "id": "dfb1bdce-7a03-49f4-a11e-314283ac9d95",
+      "videoId": "d67676d8-c7e8-4c9f-a1e2-887326de0b87",
+      "denuncianteId": "6eb34530-5529-475a-89d9-d2e7fd54984e",
+      "motivo": "Conteúdo não autorizado",
+      "estado": "pendente",
+      "criadoEm": "2026-06-20T23:58:03.360Z"
+    }
+  ],
   "categorias": [
     {
       "id": "762110d8-5683-472e-8443-abaf6d1523f2",
@@ -111,5 +191,92 @@
       "icone": "📌"
     }
   ],
-  "auditoria": []
+  "auditoria": [
+    {
+      "id": "1b43d963-2930-40ab-bb69-67b5e926735d",
+      "adminId": "96825eea-dc50-4893-997f-dc2edc975036",
+      "acao": "UTILIZADOR_SUSPENSO",
+      "entidade": "utilizador",
+      "entidadeId": "4e53561c-8464-4a3d-ab55-9c3097a68506",
+      "detalhe": "Conta de teste@gmail.com alterada para suspenso",
+      "timestamp": "2026-06-20T22:19:08.623Z"
+    },
+    {
+      "id": "54e83eb4-ac89-497b-bb35-a5820f9d42d0",
+      "adminId": "96825eea-dc50-4893-997f-dc2edc975036",
+      "acao": "UTILIZADOR_ATIVO",
+      "entidade": "utilizador",
+      "entidadeId": "4e53561c-8464-4a3d-ab55-9c3097a68506",
+      "detalhe": "Conta de teste@gmail.com alterada para ativo",
+      "timestamp": "2026-06-20T22:19:11.406Z"
+    },
+    {
+      "id": "1460f503-f937-4d86-b6f6-3aa0481ffff5",
+      "adminId": "96825eea-dc50-4893-997f-dc2edc975036",
+      "acao": "VIDEO_REMOVIDO",
+      "entidade": "video",
+      "entidadeId": "c5f70326-b0b4-451b-9788-8b88cf67e330",
+      "detalhe": "Vídeo marcado como removido",
+      "timestamp": "2026-06-21T00:13:05.179Z"
+    },
+    {
+      "id": "fef1882c-3e79-47db-9265-1d61c6e6e1d3",
+      "adminId": "96825eea-dc50-4893-997f-dc2edc975036",
+      "acao": "VIDEO_REMOVIDO",
+      "entidade": "video",
+      "entidadeId": "bb548084-83c1-415f-b103-fc1e4aeecfab",
+      "detalhe": "Vídeo marcado como removido",
+      "timestamp": "2026-06-21T00:13:06.329Z"
+    },
+    {
+      "id": "2bfbac00-fe1c-4341-a9e8-c4e6427782aa",
+      "adminId": "96825eea-dc50-4893-997f-dc2edc975036",
+      "acao": "VIDEO_REMOVIDO",
+      "entidade": "video",
+      "entidadeId": "d67676d8-c7e8-4c9f-a1e2-887326de0b87",
+      "detalhe": "Vídeo marcado como removido",
+      "timestamp": "2026-06-21T00:13:07.395Z"
+    },
+    {
+      "id": "c938a56a-bb4a-4c80-b550-d5689c7e39c2",
+      "adminId": "96825eea-dc50-4893-997f-dc2edc975036",
+      "acao": "VIDEO_ATIVO",
+      "entidade": "video",
+      "entidadeId": "d67676d8-c7e8-4c9f-a1e2-887326de0b87",
+      "detalhe": "Vídeo marcado como ativo",
+      "timestamp": "2026-06-21T00:13:08.555Z"
+    },
+    {
+      "id": "a1f51ee0-741b-4ad3-8250-93cf9e742f16",
+      "adminId": "96825eea-dc50-4893-997f-dc2edc975036",
+      "acao": "VIDEO_ATIVO",
+      "entidade": "video",
+      "entidadeId": "bb548084-83c1-415f-b103-fc1e4aeecfab",
+      "detalhe": "Vídeo marcado como ativo",
+      "timestamp": "2026-06-21T00:13:09.353Z"
+    },
+    {
+      "id": "21ec3dfb-e212-43f5-bea3-c5065b8526a8",
+      "adminId": "96825eea-dc50-4893-997f-dc2edc975036",
+      "acao": "VIDEO_ATIVO",
+      "entidade": "video",
+      "entidadeId": "c5f70326-b0b4-451b-9788-8b88cf67e330",
+      "detalhe": "Vídeo marcado como ativo",
+      "timestamp": "2026-06-21T00:13:10.006Z"
+    }
+  ],
+  "guardados": [
+    {
+      "id": "4b1e2b08-52fb-4251-967d-99d6d037dd80",
+      "videoId": "c2b7d86a-9652-48db-80ff-5a9ae46044cb",
+      "userId": "ec90d73f-7da8-4001-ad46-2a019c65fa2d",
+      "criadoEm": "2026-06-20T20:53:03.657Z"
+    },
+    {
+      "id": "625146ee-0cb5-4122-baf8-c94b20422368",
+      "videoId": "bb548084-83c1-415f-b103-fc1e4aeecfab",
+      "userId": "6eb34530-5529-475a-89d9-d2e7fd54984e",
+      "criadoEm": "2026-06-20T23:36:24.812Z"
+    }
+  ]
 }

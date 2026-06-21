@@ -41,6 +41,7 @@ const db = {
   denuncias:  saved?.denuncias  ?? [],
   categorias: saved?.categorias ?? CATEGORIAS_PADRAO,
   auditoria:  saved?.auditoria  ?? [],
+  guardados:  saved?.guardados  ?? [],
 };
 
 // Guardar com debounce (evita escrita excessiva em disco)
@@ -221,6 +222,33 @@ function contarDenunciasVideo(videoId) {
   return db.denuncias.filter(d => d.videoId === videoId).length;
 }
 
+// ─── GUARDADOS (bookmarks) ────────────────────────────────────────────────────
+
+function toggleGuardado(videoId, userId) {
+  const idx = db.guardados.findIndex(g => g.videoId === videoId && g.userId === userId);
+  if (idx >= 0) {
+    db.guardados.splice(idx, 1);
+    saveDB();
+    return { guardado: false };
+  }
+  db.guardados.push({ id: uuidv4(), videoId, userId, criadoEm: new Date() });
+  saveDB();
+  return { guardado: true };
+}
+
+function listarGuardados(userId) {
+  const ids = db.guardados.filter(g => g.userId === userId).map(g => g.videoId);
+  return db.videos.filter(v => ids.includes(v.id) && v.estado === 'ativo');
+}
+
+function estaGuardado(videoId, userId) {
+  return db.guardados.some(g => g.videoId === videoId && g.userId === userId);
+}
+
+function listarVideosPorAutor(autorId) {
+  return db.videos.filter(v => v.autorId === autorId && v.estado === 'ativo');
+}
+
 // ─── CATEGORIAS ───────────────────────────────────────────────────────────────
 
 function listarCategorias() { return db.categorias; }
@@ -267,11 +295,12 @@ module.exports = {
   criarUtilizador, buscarUtilizadorPorEmail, buscarUtilizadorPorId,
   listarUtilizadores, atualizarEstadoUtilizador,
   criarVideo, listarVideos, buscarVideoPorId, pesquisarVideos,
-  incrementarViews, atualizarEstadoVideo,
+  incrementarViews, atualizarEstadoVideo, listarVideosPorAutor,
   toggleLike, contarLikes, utilizadorDeuLike,
   criarComentario, listarComentarios, removerComentario,
   criarDenuncia, listarDenuncias, atualizarDenuncia, contarDenunciasVideo,
   MOTIVOS_DENUNCIA,
+  toggleGuardado, listarGuardados, estaGuardado,
   listarCategorias, criarCategoria,
   registarAuditoria, listarAuditoria,
   obterEstatisticas

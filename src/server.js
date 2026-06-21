@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const https   = require('https');
+const http    = require('http');
 const cors    = require('cors');
 const morgan  = require('morgan');
 const path    = require('path');
@@ -34,20 +35,19 @@ const tlsOptions = {
 // Middlewares
 app.use(cors());
 app.use(morgan('dev'));
-app.use(verificarCertificado); // mTLS — bloqueia pedidos sem certificado válido da CA-ISPTEC
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Ficheiros estáticos
-app.use('/hls',      express.static(path.join(__dirname, '../hls')));
-app.use('/uploads',  express.static(path.join(__dirname, '../uploads')));
+// Ficheiros estáticos e stream — sem mTLS (player nativo não consegue apresentar certificado de cliente)
+app.use('/hls',         express.static(path.join(__dirname, '../hls')));
+app.use('/uploads',     express.static(path.join(__dirname, '../uploads')));
+app.use('/api/stream',  streamRoutes);
 
-// Rotas
-app.use('/api/auth',       authRoutes);
-app.use('/api/videos',     videosRoutes);
-app.use('/api/stream',     streamRoutes);
-app.use('/api/admin',      adminRoutes);
-app.use('/api/categorias', categoriasRoutes);
+// Rotas protegidas por mTLS
+app.use('/api/auth',       verificarCertificado, authRoutes);
+app.use('/api/videos',     verificarCertificado, videosRoutes);
+app.use('/api/admin',      verificarCertificado, adminRoutes);
+app.use('/api/categorias', verificarCertificado, categoriasRoutes);
 
 // Rota raiz — lista todos os endpoints
 app.get('/', (req, res) => {
@@ -76,10 +76,23 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Erro interno do servidor', details: err.message });
 });
 
+// Servidor HTTPS + mTLS para a API
 https.createServer(tlsOptions, app).listen(PORT, () => {
   console.log(`\n✅ Servidor HTTPS+mTLS iniciado na porta ${PORT}`);
   console.log(`📡 API:        https://localhost:${PORT}`);
-  console.log(`🎬 Streaming:  https://localhost:${PORT}/api/stream/:id`);
   console.log(`🛡️  Admin:      https://localhost:${PORT}/api/admin/dashboard`);
-  console.log(`🔒 mTLS:       certificado CA-ISPTEC obrigatório\n`);
+  console.log(`🔒 mTLS:       certificado CA-ISPTEC obrigatório`);
+});
+
+// Servidor HTTP para streaming de média (player nativo não suporta mTLS)
+const MEDIA_PORT = process.env.MEDIA_PORT || 3001;
+const mediaApp = express();
+mediaApp.use(cors());
+mediaApp.use(morgan('dev'));
+mediaApp.use('/api/stream', streamRoutes);
+mediaApp.use('/hls',        express.static(path.join(__dirname, '../hls')));
+mediaApp.use('/uploads',    express.static(path.join(__dirname, '../uploads')));
+
+http.createServer(mediaApp).listen(MEDIA_PORT, () => {
+  console.log(`🎬 Streaming HTTP: http://localhost:${MEDIA_PORT}/api/stream/:id\n`);
 });
