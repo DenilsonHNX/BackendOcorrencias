@@ -55,8 +55,8 @@
       "taxaCompressao": "89.9%",
       "duracao": 6,
       "autorId": "ec90d73f-7da8-4001-ad46-2a019c65fa2d",
-      "estado": "ativo",
-      "views": 8,
+      "estado": "removido",
+      "views": 10,
       "criadoEm": "2026-06-20T22:28:49.366Z",
       "thumbnail": "uploads/thumbnails/d67676d8-c7e8-4c9f-a1e2-887326de0b87.jpg"
     },
@@ -73,8 +73,8 @@
       "taxaCompressao": "82.8%",
       "duracao": 3,
       "autorId": "ec90d73f-7da8-4001-ad46-2a019c65fa2d",
-      "estado": "ativo",
-      "views": 7,
+      "estado": "removido",
+      "views": 8,
       "criadoEm": "2026-06-20T22:44:42.480Z",
       "thumbnail": "uploads/thumbnails/bb548084-83c1-415f-b103-fc1e4aeecfab.jpg"
     },
@@ -91,7 +91,7 @@
       "taxaCompressao": "80.4%",
       "duracao": 12,
       "autorId": "6eb34530-5529-475a-89d9-d2e7fd54984e",
-      "estado": "ativo",
+      "estado": "removido",
       "views": 7,
       "criadoEm": "2026-06-20T23:07:21.330Z",
       "thumbnail": "uploads/thumbnails/c5f70326-b0b4-451b-9788-8b88cf67e330.jpg"
@@ -135,8 +135,9 @@
       "videoId": "d67676d8-c7e8-4c9f-a1e2-887326de0b87",
       "denuncianteId": "6eb34530-5529-475a-89d9-d2e7fd54984e",
       "motivo": "Conteúdo não autorizado",
-      "estado": "pendente",
-      "criadoEm": "2026-06-20T23:58:03.360Z"
+      "estado": "rejeitada",
+      "criadoEm": "2026-06-20T23:58:03.360Z",
+      "resolvidoEm": "2026-06-23T10:16:05.424Z"
     }
   ],
   "categorias": [
@@ -263,6 +264,42 @@
       "entidadeId": "c5f70326-b0b4-451b-9788-8b88cf67e330",
       "detalhe": "Vídeo marcado como ativo",
       "timestamp": "2026-06-21T00:13:10.006Z"
+    },
+    {
+      "id": "d882fc91-37d8-43e4-8e66-120affd66dfb",
+      "adminId": "96825eea-dc50-4893-997f-dc2edc975036",
+      "acao": "VIDEO_REMOVIDO",
+      "entidade": "video",
+      "entidadeId": "c5f70326-b0b4-451b-9788-8b88cf67e330",
+      "detalhe": "Vídeo marcado como removido",
+      "timestamp": "2026-06-23T10:15:54.292Z"
+    },
+    {
+      "id": "1ca33fd0-f523-4084-98f9-59ede6a8739b",
+      "adminId": "96825eea-dc50-4893-997f-dc2edc975036",
+      "acao": "VIDEO_REMOVIDO",
+      "entidade": "video",
+      "entidadeId": "bb548084-83c1-415f-b103-fc1e4aeecfab",
+      "detalhe": "Vídeo marcado como removido",
+      "timestamp": "2026-06-23T10:15:54.697Z"
+    },
+    {
+      "id": "8553da95-5d05-49dc-95a4-ecb6f5944caa",
+      "adminId": "96825eea-dc50-4893-997f-dc2edc975036",
+      "acao": "VIDEO_REMOVIDO",
+      "entidade": "video",
+      "entidadeId": "d67676d8-c7e8-4c9f-a1e2-887326de0b87",
+      "detalhe": "Vídeo marcado como removido",
+      "timestamp": "2026-06-23T10:15:55.254Z"
+    },
+    {
+      "id": "58f43be7-1e81-4d5b-81c3-7673191b54a7",
+      "adminId": "96825eea-dc50-4893-997f-dc2edc975036",
+      "acao": "DENUNCIA_REJEITADA",
+      "entidade": "denuncia",
+      "entidadeId": "dfb1bdce-7a03-49f4-a11e-314283ac9d95",
+      "detalhe": "Denúncia rejeitada",
+      "timestamp": "2026-06-23T10:16:05.425Z"
     }
   ],
   "guardados": [

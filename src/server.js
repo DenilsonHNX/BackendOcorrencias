@@ -14,6 +14,7 @@ const videosRoutes     = require('./routes/videos');
 const streamRoutes     = require('./routes/stream');
 const adminRoutes      = require('./routes/admin');
 const categoriasRoutes = require('./routes/categorias');
+const liveRoutes       = require('./routes/live');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -48,6 +49,8 @@ app.use('/api/auth',       verificarCertificado, authRoutes);
 app.use('/api/videos',     verificarCertificado, videosRoutes);
 app.use('/api/admin',      verificarCertificado, adminRoutes);
 app.use('/api/categorias', verificarCertificado, categoriasRoutes);
+// Live: start/stop via mTLS (admin), status público via media server
+app.use('/api/live', verificarCertificado, liveRoutes);
 
 // Rota raiz — lista todos os endpoints
 app.get('/', (req, res) => {
@@ -90,6 +93,7 @@ const mediaApp = express();
 mediaApp.use(cors());
 mediaApp.use(morgan('dev'));
 mediaApp.use('/api/stream', streamRoutes);
+mediaApp.use('/api/live',  liveRoutes);   // status público sem mTLS
 mediaApp.use('/hls',        express.static(path.join(__dirname, '../hls')));
 mediaApp.use('/uploads',    express.static(path.join(__dirname, '../uploads')));
 
