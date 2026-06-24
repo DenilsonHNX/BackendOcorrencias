@@ -49,6 +49,12 @@ router.get('/status', (req, res) => {
   });
 });
 
+// GET /api/live/streams — lista todos os streamers TCP activos
+router.get('/streams', (req, res) => {
+  const streams = global.__tcpBroadcast?.getStreams?.() ?? [];
+  res.json({ streams, total: streams.length });
+});
+
 // POST /api/live/start — chamado pelo admin (via mTLS :3000 + token admin)
 router.post('/start', (req, res) => {
   if (liveProcess) return res.status(409).json({ error: 'Já existe uma transmissão ativa.' });
