@@ -15,6 +15,11 @@ const streamRoutes     = require('./routes/stream');
 const adminRoutes      = require('./routes/admin');
 const categoriasRoutes = require('./routes/categorias');
 const liveRoutes       = require('./routes/live');
+const { startTCPBroadcast } = require('./services/tcp-broadcast');
+
+// Servidor TCP de broadcast (mesmo protocolo do servidor_broadcast.py)
+const tcpBroadcast = startTCPBroadcast(9999);
+global.__tcpBroadcast = tcpBroadcast; // acessível pelo live.js
 
 const app  = express();
 const PORT = process.env.PORT || 3000;

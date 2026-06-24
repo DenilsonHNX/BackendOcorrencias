@@ -27,11 +27,25 @@ function liveDir() {
 
 // GET /api/live/status — público, sem mTLS (chamado pelo mobile via HTTP :3001)
 router.get('/status', (req, res) => {
+  // Importar o estado TCP sem criar dependência circular
+  let tcpAtivo = false;
+  let tcpInfo  = null;
+  try {
+    const tb = require('../services/tcp-broadcast');
+    // Aceder ao estado via instância global (exposta no server.js via global)
+    tcpAtivo = global.__tcpBroadcast?.isLive?.() ?? false;
+    tcpInfo  = global.__tcpBroadcast?.getInfo?.() ?? null;
+  } catch {}
+
+  const hlsAtivo = liveProcess !== null;
+
   res.json({
-    ao_vivo:    liveProcess !== null,
-    titulo:     liveInfo?.titulo    ?? null,
-    iniciadoEm: liveInfo?.iniciadoEm ?? null,
-    url:        liveProcess ? '/hls/live/index.m3u8' : null,
+    ao_vivo:    hlsAtivo || tcpAtivo,
+    modo:       tcpAtivo ? 'tcp' : (hlsAtivo ? 'hls' : null),
+    titulo:     liveInfo?.titulo ?? tcpInfo?.titulo ?? null,
+    iniciadoEm: liveInfo?.iniciadoEm ?? tcpInfo?.iniciadoEm ?? null,
+    url:        hlsAtivo ? '/hls/live/index.m3u8' : null,
+    tcp_porta:  9999,
   });
 });
 
