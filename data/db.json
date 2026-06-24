@@ -39,6 +39,26 @@
       "estado": "ativo",
       "infracoes": 0,
       "criadoEm": "2026-06-20T23:06:00.252Z"
+    },
+    {
+      "id": "a3da033a-e3a9-4f17-a7b6-6c93e0a5ec4a",
+      "nome": "Filomeno Lopes",
+      "email": "filomenl@email.com",
+      "passwordHash": "$2a$10$YNaXqyN3gOwckXh0NqAIfOhsuBTimL57aj5m0GYmNW8BYY2C90QL2",
+      "role": "user",
+      "estado": "ativo",
+      "infracoes": 0,
+      "criadoEm": "2026-06-24T12:29:44.713Z"
+    },
+    {
+      "id": "b99e4acd-7c13-4681-8804-43be96f437b7",
+      "nome": "Stelvio Dias",
+      "email": "stelvio@gmail.com",
+      "passwordHash": "$2a$10$ADK1viXoQNkSBNgZx5h7ne1QaEaiQRPxZz.LzeorPsF7Gh.lj4yP.",
+      "role": "user",
+      "estado": "ativo",
+      "infracoes": 0,
+      "criadoEm": "2026-06-24T12:47:25.899Z"
     }
   ],
   "videos": [
